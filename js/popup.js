@@ -14,7 +14,7 @@ function Action(){
     // コールバックされたオブジェクトの中からTitleとURLだけ取り出す
     tabs.forEach(tab => {
       youtubePages.push({
-        "title": tab.title,
+        "title": parseTitle(tab.title),
         "url": tab.url,
       });
     });
@@ -64,4 +64,9 @@ function openPlayer(youtubePages){
   chrome.storage.local.set(entity, function(){
     chrome.tabs.create(createProperties, function(){});
   });
+}
+
+// titleをparseする関数
+function parseTitle(tabTitle){
+  return tabTitle.replace(/^\([0-9]+\)| - YouTube$/g, "");
 }
